@@ -12,6 +12,11 @@ export const getUser = /* GraphQL */ `
       participants {
         items {
           id
+          balanceAmount
+          stockCode
+          stockUnitBuyPrice
+          betType
+          stockUnits
           createdAt
           updatedAt
           userParticipantsId
@@ -30,6 +35,20 @@ export const getUser = /* GraphQL */ `
           updatedAt
           userLeaderboardId
           contestLeaderboardId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      message {
+        items {
+          id
+          message
+          msgDateTime
+          createdAt
+          updatedAt
+          userMessageId
+          contestMessageId
           __typename
         }
         nextToken
@@ -61,6 +80,10 @@ export const listUsers = /* GraphQL */ `
           nextToken
           __typename
         }
+        message {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
         __typename
@@ -81,6 +104,11 @@ export const getContest = /* GraphQL */ `
       participants {
         items {
           id
+          balanceAmount
+          stockCode
+          stockUnitBuyPrice
+          betType
+          stockUnits
           createdAt
           updatedAt
           userParticipantsId
@@ -110,10 +138,37 @@ export const getContest = /* GraphQL */ `
           id
           stockCode
           stockDescription
-          price
+          stockImage
+          stockPrice
           createdAt
           updatedAt
           contestContestStockId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      contestStockFeed {
+        items {
+          id
+          stockFeed
+          createdAt
+          updatedAt
+          contestContestStockFeedId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      message {
+        items {
+          id
+          message
+          msgDateTime
+          createdAt
+          updatedAt
+          userMessageId
+          contestMessageId
           __typename
         }
         nextToken
@@ -151,6 +206,14 @@ export const listContests = /* GraphQL */ `
           nextToken
           __typename
         }
+        contestStockFeed {
+          nextToken
+          __typename
+        }
+        message {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
         __typename
@@ -177,6 +240,10 @@ export const getParticipant = /* GraphQL */ `
           nextToken
           __typename
         }
+        message {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
         __typename
@@ -200,10 +267,23 @@ export const getParticipant = /* GraphQL */ `
           nextToken
           __typename
         }
+        contestStockFeed {
+          nextToken
+          __typename
+        }
+        message {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
         __typename
       }
+      balanceAmount
+      stockCode
+      stockUnitBuyPrice
+      betType
+      stockUnits
       createdAt
       updatedAt
       userParticipantsId
@@ -241,6 +321,11 @@ export const listParticipants = /* GraphQL */ `
           updatedAt
           __typename
         }
+        balanceAmount
+        stockCode
+        stockUnitBuyPrice
+        betType
+        stockUnits
         createdAt
         updatedAt
         userParticipantsId
@@ -258,7 +343,8 @@ export const getContestStock = /* GraphQL */ `
       id
       stockCode
       stockDescription
-      price
+      stockImage
+      stockPrice
       contest {
         id
         name
@@ -275,6 +361,14 @@ export const getContestStock = /* GraphQL */ `
         }
         contestDate
         contestStock {
+          nextToken
+          __typename
+        }
+        contestStockFeed {
+          nextToken
+          __typename
+        }
+        message {
           nextToken
           __typename
         }
@@ -300,7 +394,8 @@ export const listContestStocks = /* GraphQL */ `
         id
         stockCode
         stockDescription
-        price
+        stockImage
+        stockPrice
         contest {
           id
           name
@@ -341,6 +436,10 @@ export const getLeaderboard = /* GraphQL */ `
           nextToken
           __typename
         }
+        message {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
         __typename
@@ -361,6 +460,14 @@ export const getLeaderboard = /* GraphQL */ `
         }
         contestDate
         contestStock {
+          nextToken
+          __typename
+        }
+        contestStockFeed {
+          nextToken
+          __typename
+        }
+        message {
           nextToken
           __typename
         }
@@ -411,6 +518,192 @@ export const listLeaderboards = /* GraphQL */ `
         updatedAt
         userLeaderboardId
         contestLeaderboardId
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const getMessage = /* GraphQL */ `
+  query GetMessage($id: ID!) {
+    getMessage(id: $id) {
+      id
+      message
+      user {
+        id
+        username
+        email
+        profileImage
+        participants {
+          nextToken
+          __typename
+        }
+        leaderboard {
+          nextToken
+          __typename
+        }
+        message {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      contest {
+        id
+        name
+        description
+        status
+        maxParticipants
+        participants {
+          nextToken
+          __typename
+        }
+        leaderboard {
+          nextToken
+          __typename
+        }
+        contestDate
+        contestStock {
+          nextToken
+          __typename
+        }
+        contestStockFeed {
+          nextToken
+          __typename
+        }
+        message {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      msgDateTime
+      createdAt
+      updatedAt
+      userMessageId
+      contestMessageId
+      __typename
+    }
+  }
+`;
+export const listMessages = /* GraphQL */ `
+  query ListMessages(
+    $filter: ModelMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        message
+        user {
+          id
+          username
+          email
+          profileImage
+          createdAt
+          updatedAt
+          __typename
+        }
+        contest {
+          id
+          name
+          description
+          status
+          maxParticipants
+          contestDate
+          createdAt
+          updatedAt
+          __typename
+        }
+        msgDateTime
+        createdAt
+        updatedAt
+        userMessageId
+        contestMessageId
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const getContestStockFeed = /* GraphQL */ `
+  query GetContestStockFeed($id: ID!) {
+    getContestStockFeed(id: $id) {
+      id
+      stockFeed
+      contest {
+        id
+        name
+        description
+        status
+        maxParticipants
+        participants {
+          nextToken
+          __typename
+        }
+        leaderboard {
+          nextToken
+          __typename
+        }
+        contestDate
+        contestStock {
+          nextToken
+          __typename
+        }
+        contestStockFeed {
+          nextToken
+          __typename
+        }
+        message {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      contestContestStockFeedId
+      __typename
+    }
+  }
+`;
+export const listContestStockFeeds = /* GraphQL */ `
+  query ListContestStockFeeds(
+    $filter: ModelContestStockFeedFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listContestStockFeeds(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        stockFeed
+        contest {
+          id
+          name
+          description
+          status
+          maxParticipants
+          contestDate
+          createdAt
+          updatedAt
+          __typename
+        }
+        createdAt
+        updatedAt
+        contestContestStockFeedId
         __typename
       }
       nextToken

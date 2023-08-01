@@ -12,6 +12,11 @@ export const onCreateUser = /* GraphQL */ `
       participants {
         items {
           id
+          balanceAmount
+          stockCode
+          stockUnitBuyPrice
+          betType
+          stockUnits
           createdAt
           updatedAt
           userParticipantsId
@@ -30,6 +35,20 @@ export const onCreateUser = /* GraphQL */ `
           updatedAt
           userLeaderboardId
           contestLeaderboardId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      message {
+        items {
+          id
+          message
+          msgDateTime
+          createdAt
+          updatedAt
+          userMessageId
+          contestMessageId
           __typename
         }
         nextToken
@@ -51,6 +70,11 @@ export const onUpdateUser = /* GraphQL */ `
       participants {
         items {
           id
+          balanceAmount
+          stockCode
+          stockUnitBuyPrice
+          betType
+          stockUnits
           createdAt
           updatedAt
           userParticipantsId
@@ -69,6 +93,20 @@ export const onUpdateUser = /* GraphQL */ `
           updatedAt
           userLeaderboardId
           contestLeaderboardId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      message {
+        items {
+          id
+          message
+          msgDateTime
+          createdAt
+          updatedAt
+          userMessageId
+          contestMessageId
           __typename
         }
         nextToken
@@ -90,6 +128,11 @@ export const onDeleteUser = /* GraphQL */ `
       participants {
         items {
           id
+          balanceAmount
+          stockCode
+          stockUnitBuyPrice
+          betType
+          stockUnits
           createdAt
           updatedAt
           userParticipantsId
@@ -108,6 +151,20 @@ export const onDeleteUser = /* GraphQL */ `
           updatedAt
           userLeaderboardId
           contestLeaderboardId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      message {
+        items {
+          id
+          message
+          msgDateTime
+          createdAt
+          updatedAt
+          userMessageId
+          contestMessageId
           __typename
         }
         nextToken
@@ -130,6 +187,11 @@ export const onCreateContest = /* GraphQL */ `
       participants {
         items {
           id
+          balanceAmount
+          stockCode
+          stockUnitBuyPrice
+          betType
+          stockUnits
           createdAt
           updatedAt
           userParticipantsId
@@ -159,10 +221,37 @@ export const onCreateContest = /* GraphQL */ `
           id
           stockCode
           stockDescription
-          price
+          stockImage
+          stockPrice
           createdAt
           updatedAt
           contestContestStockId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      contestStockFeed {
+        items {
+          id
+          stockFeed
+          createdAt
+          updatedAt
+          contestContestStockFeedId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      message {
+        items {
+          id
+          message
+          msgDateTime
+          createdAt
+          updatedAt
+          userMessageId
+          contestMessageId
           __typename
         }
         nextToken
@@ -185,6 +274,11 @@ export const onUpdateContest = /* GraphQL */ `
       participants {
         items {
           id
+          balanceAmount
+          stockCode
+          stockUnitBuyPrice
+          betType
+          stockUnits
           createdAt
           updatedAt
           userParticipantsId
@@ -214,10 +308,37 @@ export const onUpdateContest = /* GraphQL */ `
           id
           stockCode
           stockDescription
-          price
+          stockImage
+          stockPrice
           createdAt
           updatedAt
           contestContestStockId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      contestStockFeed {
+        items {
+          id
+          stockFeed
+          createdAt
+          updatedAt
+          contestContestStockFeedId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      message {
+        items {
+          id
+          message
+          msgDateTime
+          createdAt
+          updatedAt
+          userMessageId
+          contestMessageId
           __typename
         }
         nextToken
@@ -240,6 +361,11 @@ export const onDeleteContest = /* GraphQL */ `
       participants {
         items {
           id
+          balanceAmount
+          stockCode
+          stockUnitBuyPrice
+          betType
+          stockUnits
           createdAt
           updatedAt
           userParticipantsId
@@ -269,10 +395,37 @@ export const onDeleteContest = /* GraphQL */ `
           id
           stockCode
           stockDescription
-          price
+          stockImage
+          stockPrice
           createdAt
           updatedAt
           contestContestStockId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      contestStockFeed {
+        items {
+          id
+          stockFeed
+          createdAt
+          updatedAt
+          contestContestStockFeedId
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      message {
+        items {
+          id
+          message
+          msgDateTime
+          createdAt
+          updatedAt
+          userMessageId
+          contestMessageId
           __typename
         }
         nextToken
@@ -303,6 +456,10 @@ export const onCreateParticipant = /* GraphQL */ `
           nextToken
           __typename
         }
+        message {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
         __typename
@@ -326,10 +483,23 @@ export const onCreateParticipant = /* GraphQL */ `
           nextToken
           __typename
         }
+        contestStockFeed {
+          nextToken
+          __typename
+        }
+        message {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
         __typename
       }
+      balanceAmount
+      stockCode
+      stockUnitBuyPrice
+      betType
+      stockUnits
       createdAt
       updatedAt
       userParticipantsId
@@ -357,6 +527,10 @@ export const onUpdateParticipant = /* GraphQL */ `
           nextToken
           __typename
         }
+        message {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
         __typename
@@ -380,10 +554,23 @@ export const onUpdateParticipant = /* GraphQL */ `
           nextToken
           __typename
         }
+        contestStockFeed {
+          nextToken
+          __typename
+        }
+        message {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
         __typename
       }
+      balanceAmount
+      stockCode
+      stockUnitBuyPrice
+      betType
+      stockUnits
       createdAt
       updatedAt
       userParticipantsId
@@ -411,6 +598,10 @@ export const onDeleteParticipant = /* GraphQL */ `
           nextToken
           __typename
         }
+        message {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
         __typename
@@ -434,10 +625,23 @@ export const onDeleteParticipant = /* GraphQL */ `
           nextToken
           __typename
         }
+        contestStockFeed {
+          nextToken
+          __typename
+        }
+        message {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
         __typename
       }
+      balanceAmount
+      stockCode
+      stockUnitBuyPrice
+      betType
+      stockUnits
       createdAt
       updatedAt
       userParticipantsId
@@ -454,7 +658,8 @@ export const onCreateContestStock = /* GraphQL */ `
       id
       stockCode
       stockDescription
-      price
+      stockImage
+      stockPrice
       contest {
         id
         name
@@ -471,6 +676,14 @@ export const onCreateContestStock = /* GraphQL */ `
         }
         contestDate
         contestStock {
+          nextToken
+          __typename
+        }
+        contestStockFeed {
+          nextToken
+          __typename
+        }
+        message {
           nextToken
           __typename
         }
@@ -493,7 +706,8 @@ export const onUpdateContestStock = /* GraphQL */ `
       id
       stockCode
       stockDescription
-      price
+      stockImage
+      stockPrice
       contest {
         id
         name
@@ -510,6 +724,14 @@ export const onUpdateContestStock = /* GraphQL */ `
         }
         contestDate
         contestStock {
+          nextToken
+          __typename
+        }
+        contestStockFeed {
+          nextToken
+          __typename
+        }
+        message {
           nextToken
           __typename
         }
@@ -532,7 +754,8 @@ export const onDeleteContestStock = /* GraphQL */ `
       id
       stockCode
       stockDescription
-      price
+      stockImage
+      stockPrice
       contest {
         id
         name
@@ -549,6 +772,14 @@ export const onDeleteContestStock = /* GraphQL */ `
         }
         contestDate
         contestStock {
+          nextToken
+          __typename
+        }
+        contestStockFeed {
+          nextToken
+          __typename
+        }
+        message {
           nextToken
           __typename
         }
@@ -584,6 +815,10 @@ export const onCreateLeaderboard = /* GraphQL */ `
           nextToken
           __typename
         }
+        message {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
         __typename
@@ -604,6 +839,14 @@ export const onCreateLeaderboard = /* GraphQL */ `
         }
         contestDate
         contestStock {
+          nextToken
+          __typename
+        }
+        contestStockFeed {
+          nextToken
+          __typename
+        }
+        message {
           nextToken
           __typename
         }
@@ -640,6 +883,10 @@ export const onUpdateLeaderboard = /* GraphQL */ `
           nextToken
           __typename
         }
+        message {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
         __typename
@@ -660,6 +907,14 @@ export const onUpdateLeaderboard = /* GraphQL */ `
         }
         contestDate
         contestStock {
+          nextToken
+          __typename
+        }
+        contestStockFeed {
+          nextToken
+          __typename
+        }
+        message {
           nextToken
           __typename
         }
@@ -696,6 +951,10 @@ export const onDeleteLeaderboard = /* GraphQL */ `
           nextToken
           __typename
         }
+        message {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
         __typename
@@ -719,6 +978,14 @@ export const onDeleteLeaderboard = /* GraphQL */ `
           nextToken
           __typename
         }
+        contestStockFeed {
+          nextToken
+          __typename
+        }
+        message {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
         __typename
@@ -727,6 +994,339 @@ export const onDeleteLeaderboard = /* GraphQL */ `
       updatedAt
       userLeaderboardId
       contestLeaderboardId
+      __typename
+    }
+  }
+`;
+export const onCreateMessage = /* GraphQL */ `
+  subscription OnCreateMessage($filter: ModelSubscriptionMessageFilterInput) {
+    onCreateMessage(filter: $filter) {
+      id
+      message
+      user {
+        id
+        username
+        email
+        profileImage
+        participants {
+          nextToken
+          __typename
+        }
+        leaderboard {
+          nextToken
+          __typename
+        }
+        message {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      contest {
+        id
+        name
+        description
+        status
+        maxParticipants
+        participants {
+          nextToken
+          __typename
+        }
+        leaderboard {
+          nextToken
+          __typename
+        }
+        contestDate
+        contestStock {
+          nextToken
+          __typename
+        }
+        contestStockFeed {
+          nextToken
+          __typename
+        }
+        message {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      msgDateTime
+      createdAt
+      updatedAt
+      userMessageId
+      contestMessageId
+      __typename
+    }
+  }
+`;
+export const onUpdateMessage = /* GraphQL */ `
+  subscription OnUpdateMessage($filter: ModelSubscriptionMessageFilterInput) {
+    onUpdateMessage(filter: $filter) {
+      id
+      message
+      user {
+        id
+        username
+        email
+        profileImage
+        participants {
+          nextToken
+          __typename
+        }
+        leaderboard {
+          nextToken
+          __typename
+        }
+        message {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      contest {
+        id
+        name
+        description
+        status
+        maxParticipants
+        participants {
+          nextToken
+          __typename
+        }
+        leaderboard {
+          nextToken
+          __typename
+        }
+        contestDate
+        contestStock {
+          nextToken
+          __typename
+        }
+        contestStockFeed {
+          nextToken
+          __typename
+        }
+        message {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      msgDateTime
+      createdAt
+      updatedAt
+      userMessageId
+      contestMessageId
+      __typename
+    }
+  }
+`;
+export const onDeleteMessage = /* GraphQL */ `
+  subscription OnDeleteMessage($filter: ModelSubscriptionMessageFilterInput) {
+    onDeleteMessage(filter: $filter) {
+      id
+      message
+      user {
+        id
+        username
+        email
+        profileImage
+        participants {
+          nextToken
+          __typename
+        }
+        leaderboard {
+          nextToken
+          __typename
+        }
+        message {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      contest {
+        id
+        name
+        description
+        status
+        maxParticipants
+        participants {
+          nextToken
+          __typename
+        }
+        leaderboard {
+          nextToken
+          __typename
+        }
+        contestDate
+        contestStock {
+          nextToken
+          __typename
+        }
+        contestStockFeed {
+          nextToken
+          __typename
+        }
+        message {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      msgDateTime
+      createdAt
+      updatedAt
+      userMessageId
+      contestMessageId
+      __typename
+    }
+  }
+`;
+export const onCreateContestStockFeed = /* GraphQL */ `
+  subscription OnCreateContestStockFeed(
+    $filter: ModelSubscriptionContestStockFeedFilterInput
+  ) {
+    onCreateContestStockFeed(filter: $filter) {
+      id
+      stockFeed
+      contest {
+        id
+        name
+        description
+        status
+        maxParticipants
+        participants {
+          nextToken
+          __typename
+        }
+        leaderboard {
+          nextToken
+          __typename
+        }
+        contestDate
+        contestStock {
+          nextToken
+          __typename
+        }
+        contestStockFeed {
+          nextToken
+          __typename
+        }
+        message {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      contestContestStockFeedId
+      __typename
+    }
+  }
+`;
+export const onUpdateContestStockFeed = /* GraphQL */ `
+  subscription OnUpdateContestStockFeed(
+    $filter: ModelSubscriptionContestStockFeedFilterInput
+  ) {
+    onUpdateContestStockFeed(filter: $filter) {
+      id
+      stockFeed
+      contest {
+        id
+        name
+        description
+        status
+        maxParticipants
+        participants {
+          nextToken
+          __typename
+        }
+        leaderboard {
+          nextToken
+          __typename
+        }
+        contestDate
+        contestStock {
+          nextToken
+          __typename
+        }
+        contestStockFeed {
+          nextToken
+          __typename
+        }
+        message {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      contestContestStockFeedId
+      __typename
+    }
+  }
+`;
+export const onDeleteContestStockFeed = /* GraphQL */ `
+  subscription OnDeleteContestStockFeed(
+    $filter: ModelSubscriptionContestStockFeedFilterInput
+  ) {
+    onDeleteContestStockFeed(filter: $filter) {
+      id
+      stockFeed
+      contest {
+        id
+        name
+        description
+        status
+        maxParticipants
+        participants {
+          nextToken
+          __typename
+        }
+        leaderboard {
+          nextToken
+          __typename
+        }
+        contestDate
+        contestStock {
+          nextToken
+          __typename
+        }
+        contestStockFeed {
+          nextToken
+          __typename
+        }
+        message {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      createdAt
+      updatedAt
+      contestContestStockFeedId
       __typename
     }
   }

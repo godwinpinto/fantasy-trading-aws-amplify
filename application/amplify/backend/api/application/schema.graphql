@@ -9,6 +9,7 @@ type User @model {
   profileImage: String!
   participants: [Participant] @hasMany
   leaderboard: [Leaderboard] @hasMany  
+  message: [Message] @hasMany
 }
 
 type Contest @model {
@@ -21,19 +22,27 @@ type Contest @model {
   leaderboard: [Leaderboard] @hasMany  
   contestDate: AWSDateTime
   contestStock: [ContestStock] @hasMany
+  contestStockFeed: [ContestStockFeed] @hasMany
+  message: [Message] @hasMany
 }
 
 type Participant @model {
   id: ID!
   user: User @belongsTo
   contest: Contest @belongsTo
+  balanceAmount: Float!
+  stockCode: String
+  stockUnitBuyPrice: Float
+  betType: String
+  stockUnits: Float
 }
 
 type ContestStock @model {
   id: ID!
   stockCode: String!
   stockDescription: String!
-  price: Float
+  stockImage: String!
+  stockPrice: Float
   contest: Contest @belongsTo
 }
 
@@ -43,5 +52,19 @@ type Leaderboard @model {
   rank: Int
   amount: Float
   user: User @belongsTo
+  contest: Contest @belongsTo
+}
+
+type Message @model{
+  id:ID!
+  message: String!
+  user: User @belongsTo
+  contest: Contest @belongsTo
+  msgDateTime: AWSDateTime
+} 
+
+type ContestStockFeed @model {
+  id: ID!
+  stockFeed: String!
   contest: Contest @belongsTo
 }
