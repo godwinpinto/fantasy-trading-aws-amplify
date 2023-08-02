@@ -136,11 +136,11 @@ export const useGamePlayStore = defineStore('gamePlayStore', () => {
                 }
 
             } else if (action === 'W') {
-                balanceAmount = calculateProfitOrLoss(currVal.betType, (currVal.stockCode == 'BTC' ?
-                    CRYPTO_BTC.value : currVal.stockCode == 'ETH' ?
-                        CRYPTO_ETH.value : currVal.stockCode == 'SOL' ?
-                            CRYPTO_SOL.value : currVal.stockCode == 'XRP' ?
-                                CRYPTO_XRP.value : CRYPTO_DOGE.value), currVal.stockUnitBuyPrice, currVal.stockUnits)
+                balanceAmount = currVal.stockUnitBuyPrice*currVal.stockUnits+calculateProfitOrLoss(currVal.betType, currVal.stockUnitBuyPrice,(currVal.stockCode == 'BTC' ?
+                CRYPTO_BTC.value : currVal.stockCode == 'ETH' ?
+                    CRYPTO_ETH.value : currVal.stockCode == 'SOL' ?
+                        CRYPTO_SOL.value : currVal.stockCode == 'XRP' ?
+                            CRYPTO_XRP.value : CRYPTO_DOGE.value), currVal.stockUnits)
                 stockCode = '';
                 betType = '';
                 stockUnitBuyPrice = 0;
@@ -186,11 +186,11 @@ export const useGamePlayStore = defineStore('gamePlayStore', () => {
             const currVal = participantDetails.value;
             let balanceAmount = 0;
 
-            balanceAmount = calculateProfitOrLoss(currVal.betType, (currVal.stockCode == 'BTC' ?
-                CRYPTO_BTC.value : currVal.stockCode == 'ETH' ?
-                    CRYPTO_ETH.value : currVal.stockCode == 'SOL' ?
-                        CRYPTO_SOL.value : currVal.stockCode == 'XRP' ?
-                            CRYPTO_XRP.value : CRYPTO_DOGE.value), currVal.stockUnitBuyPrice, currVal.stockUnits)
+            balanceAmount = calculateProfitOrLoss(currVal.betType,  currVal.stockUnitBuyPrice,(currVal.stockCode == 'BTC' ?
+            CRYPTO_BTC.value : currVal.stockCode == 'ETH' ?
+                CRYPTO_ETH.value : currVal.stockCode == 'SOL' ?
+                    CRYPTO_SOL.value : currVal.stockCode == 'XRP' ?
+                        CRYPTO_XRP.value : CRYPTO_DOGE.value), currVal.stockUnits)
 
             return formatAmount(balanceAmount);
         } catch (error) {

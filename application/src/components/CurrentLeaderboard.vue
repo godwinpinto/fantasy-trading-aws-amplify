@@ -187,11 +187,11 @@ const computerLeaderboard = computed(() => {
     if(item.balanceAmount!=0){
       balanceAmount=item.balanceAmount;
     }else{
-      balanceAmount=item.stockUnitBuyPrice*item.stockUnits+calculateProfitOrLoss(item.betType,(item.stockCode=='BTC'?
+      balanceAmount=item.stockUnitBuyPrice*item.stockUnits+calculateProfitOrLoss(item.betType,item.stockUnitBuyPrice,(item.stockCode=='BTC'?
       CRYPTO_BTC.value:item.stockCode=='ETH'?
       CRYPTO_ETH.value:item.stockCode=='SOL'?
       CRYPTO_SOL.value:item.stockCode=='XRP'?
-      CRYPTO_XRP.value:CRYPTO_DOGE.value),item.stockUnitBuyPrice,item.stockUnits)
+      CRYPTO_XRP.value:CRYPTO_DOGE.value),item.stockUnits)
   }
     return ({
     ...item,

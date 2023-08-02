@@ -11,7 +11,7 @@ import JoinGame from '@/components/game/JoinGame.vue'
 import { useGamePlayStore } from '@/stores/gamePlayStore';
 import { onMounted, watch, ref, onBeforeMount } from 'vue';
 import { API, graphqlOperation } from 'aws-amplify'
-import { listContestStocks, listMessages, listParticipants } from '@/graphql/queries';
+import { listContestStockFeeds, listContestStocks, listMessages, listParticipants } from '@/graphql/queries';
 import { onCreateMessage } from '@/graphql/subscriptions';
 import type { GraphQLSubscription } from '@aws-amplify/api';
 import type { OnCreateParticipantSubscription, OnUpdateContestStockFeedSubscription } from '@/API';
@@ -51,9 +51,7 @@ const currentStocksList = ref<Array<StocksRow>>([]);
 watch(contestId, (newContestId, oldContestId) => {
   if (newContestId !== oldContestId && newContestId != '') {
     getCurrentStocks(newContestId);
-    /*     createStocks("BTC","Bitcoin","bitcoin.png",100000.98);
-    createStocks("ETH","Ethereum","etherum.png",1000.28); */
-
+    getCurrentFeed(contestId.value);
   }
 });
 
@@ -103,9 +101,35 @@ const getCurrentStocks = async (contestId: string) => {
 
 }
 
+
+const getCurrentFeed = async (contestId: string) => {
+  try {
+    const existingFeed: any = await API.graphql(graphqlOperation(listContestStockFeeds, { filter: { "contestContestStockFeedId": { "eq": contestId } } }));
+    if (existingFeed && existingFeed.data && existingFeed.data.listContestStockFeeds && existingFeed.data.listContestStockFeeds.items && existingFeed.data.listContestStockFeeds.items.length > 0) {
+
+      const stockFeed: any = existingFeed.data.listContestStockFeeds.items[0];
+        console.log("stockFeed", stockFeed);
+        const stockDataObject: any = JSON.parse(stockFeed.stockFeed);
+        CRYPTO_BTC.value = stockDataObject.BTC;
+        CRYPTO_DOGE.value = stockDataObject.DOGE;
+        CRYPTO_SOL.value = stockDataObject.SOL;
+        CRYPTO_ETH.value = stockDataObject.ETH;
+        CRYPTO_XRP.value = stockDataObject.XRP;
+        console.log("FEEEEEEEEEEEEEEEEDDDDD FOUND")
+    } else {
+      console.log("No Stock Feed found")
+    }
+  } catch (error) {
+    console.log("Error in fetching stocks feed", error);
+  }
+  subscription();
+
+}
+
 onBeforeMount(() => {
   if (contestId.value != '') {
     getCurrentStocks(contestId.value);
+    getCurrentFeed(contestId.value);
   }
 });
 
@@ -158,7 +182,7 @@ watch(participantDetails.value, (newValue, oldValue) => {
                 </div>
               </div>
               <div>
-                <div class="font-bold">{{ stock.stockDescription }}</div>
+                <div class="font-bold">{{ stock.stockDescription }} - {{ stock.stockCode }}</div>
                 <div class="badge badge-accent badge-ghost p-4">
                   <IconCurrency />{{ (stock.stockCode=='BTC'?CRYPTO_BTC:stock.stockCode=='ETH'?CRYPTO_ETH:stock.stockCode=='SOL'?CRYPTO_SOL:stock.stockCode=='XRP'?CRYPTO_XRP:CRYPTO_DOGE).toFixed(4) }}
                 </div>
@@ -197,14 +221,14 @@ watch(participantDetails.value, (newValue, oldValue) => {
               <th>Invested Amount  <div class="badge badge-accent badge-ghost p-4">
                 <IconCurrency />{{ formatAmount(participantDetails.stockUnitBuyPrice*participantDetails.stockUnits) }}
               </div></th>
-              <th v-if="participantDetails.stockCode!=''">Current Returns  <div class="badge badge-accent badge-ghost p-4">
+              <th v-if="participantDetails.stockCode!=''">Current P/L  <div class="badge badge-accent badge-ghost p-4">
                 <IconCurrency />{{ calculateInvestedAmount }}
               </div></th>
           </tr>
           <tr v-if="participantDetails.stockCode!=''">
             <th colspan="3">
               You Bought: <div class="badge badge-accent badge-ghost p-4">
-                 {{ participantDetails.stockCode }} - {{ participantDetails.betType=='S'?'Sell':'Buy' }} @ <IconCurrency /> {{ formatAmount(participantDetails.stockUnitBuyPrice) }}              
+                 {{ participantDetails.stockCode }} - {{ participantDetails.betType=='S'?'Sell':'Buy' }}, for units: {{ formatAmount(participantDetails.stockUnits) }} @ <IconCurrency /> {{ formatAmount(participantDetails.stockUnitBuyPrice) }}/unit
                 </div>
             </th>
           </tr>

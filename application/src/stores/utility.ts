@@ -35,7 +35,7 @@ export default function timeAgo(isoDatetime: string): string {
 
 export function formatAmount(amount:number) {
     // Use toLocaleString to format the amount with commas as thousands separators and 2 decimal places
-    return amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 });
   }
 
 export function calculateProfitOrLoss(
