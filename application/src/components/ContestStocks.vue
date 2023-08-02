@@ -178,7 +178,11 @@ watch(participantDetails.value, (newValue, oldValue) => {
             <div class="flex items-center space-x-3">
               <div class="avatar">
                 <div class="mask mask-squircle w-12 h-12">
-                  <img :src="'src/assets/' + stock.stockImage" alt="Avatar Tailwind CSS Component" />
+                  <img v-if="stock.stockCode=='BTC'" :src="'src/assets/bitcoin.png' + " alt="Bitcoin Icon" />
+                  <img v-if="stock.stockCode=='DOGE'" :src="'src/assets/doge.png' + " alt="Doge Coin Icon" />
+                  <img v-if="stock.stockCode=='ETH'" :src="'src/assets/ethereum.png' + " alt="Ethereum Icon" />
+                  <img v-if="stock.stockCode=='SOL'" :src="'src/assets/solana.png' + " alt="Solana Icon" />
+                  <img v-if="stock.stockCode=='XRP'" :src="'src/assets/xrp.png' + " alt="Ripple Icon" />
                 </div>
               </div>
               <div>
