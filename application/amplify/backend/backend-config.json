@@ -20,7 +20,7 @@
     }
   },
   "auth": {
-    "application4b204dec": {
+    "application5f08eaac": {
       "customAuth": false,
       "dependsOn": [],
       "frontendAuthConfig": {
@@ -33,9 +33,7 @@
           "passwordPolicyMinLength": 8
         },
         "signupAttributes": [
-          "EMAIL",
-          "NAME",
-          "PICTURE"
+          "EMAIL"
         ],
         "socialProviders": [
           "GOOGLE"

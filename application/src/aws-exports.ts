@@ -3,12 +3,12 @@
 
 const awsmobile = {
     "aws_project_region": "ap-south-1",
-    "aws_cognito_identity_pool_id": "ap-south-1:4d9cffc3-9fc5-42e6-a353-281efedcab1b",
+    "aws_cognito_identity_pool_id": "ap-south-1:47ea122f-0985-4140-b862-3b2083f44fd3",
     "aws_cognito_region": "ap-south-1",
-    "aws_user_pools_id": "ap-south-1_eEKggHMBt",
-    "aws_user_pools_web_client_id": "4k1au7obcc4nje0fs21aitbtl8",
+    "aws_user_pools_id": "ap-south-1_8cYP53c3Y",
+    "aws_user_pools_web_client_id": "5vgsm1ib6hcj3gka6drj3p5t0n",
     "oauth": {
-        "domain": "application4b204dec-4b204dec-dev.auth.ap-south-1.amazoncognito.com",
+        "domain": "application-dev.auth.ap-south-1.amazoncognito.com",
         "scope": [
             "phone",
             "email",
@@ -16,8 +16,8 @@ const awsmobile = {
             "profile",
             "aws.cognito.signin.user.admin"
         ],
-        "redirectSignIn": "http://localhost:5173/",
-        "redirectSignOut": "http://localhost:5173/",
+        "redirectSignIn": "https://dev.d1xhajst1mi28r.amplifyapp.com/",
+        "redirectSignOut": "https://dev.d1xhajst1mi28r.amplifyapp.com/",
         "responseType": "code"
     },
     "federationTarget": "COGNITO_USER_POOLS",
@@ -28,9 +28,7 @@ const awsmobile = {
         "GOOGLE"
     ],
     "aws_cognito_signup_attributes": [
-        "EMAIL",
-        "NAME",
-        "PICTURE"
+        "EMAIL"
     ],
     "aws_cognito_mfa_configuration": "OFF",
     "aws_cognito_mfa_types": [

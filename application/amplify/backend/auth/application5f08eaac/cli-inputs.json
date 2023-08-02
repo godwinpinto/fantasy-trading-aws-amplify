@@ -1,10 +1,10 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "application4b204dec_identitypool_4b204dec",
-    "allowUnauthenticatedIdentities": true,
-    "resourceNameTruncated": "applic4b204dec",
-    "userPoolName": "application4b204dec_userpool_4b204dec",
+    "identityPoolName": "application5f08eaac_identitypool_5f08eaac",
+    "allowUnauthenticatedIdentities": false,
+    "resourceNameTruncated": "applic5f08eaac",
+    "userPoolName": "application5f08eaac_userpool_5f08eaac",
     "autoVerifiedAttributes": [
       "email"
     ],
@@ -20,9 +20,7 @@
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],
     "requiredAttributes": [
-      "email",
-      "name",
-      "picture"
+      "email"
     ],
     "aliasAttributes": [],
     "userpoolClientGenerateSecret": false,
@@ -33,10 +31,10 @@
     "userpoolClientReadAttributes": [
       "email"
     ],
-    "userpoolClientLambdaRole": "applic4b204dec_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "applic5f08eaac_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "4b204dec",
-    "resourceName": "application4b204dec",
+    "sharedId": "5f08eaac",
+    "resourceName": "application5f08eaac",
     "authSelections": "identityPoolAndUserPool",
     "useDefault": "defaultSocial",
     "hostedUI": true,
@@ -44,12 +42,11 @@
       "email"
     ],
     "triggers": {},
-    "hostedUIDomainName": "application4b204dec-4b204dec",
+    "hostedUIDomainName": "application",
     "authProvidersUserPool": [
       "Google"
     ],
-    "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"name\":\"name\",\"picture\":\"picture\",\"username\":\"sub\"}}]",
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:5173/\"],\"LogoutURLs\":[\"http://localhost:5173/\"]}",
+    "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
@@ -67,6 +64,11 @@
       ]
     },
     "breakCircularDependency": true,
-    "dependsOn": []
+    "dependsOn": [],
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://dev.d1xhajst1mi28r.amplifyapp.com/\",\"http://localhost:5173/\"],\"LogoutURLs\":[\"https://dev.d1xhajst1mi28r.amplifyapp.com/\",\"http://localhost:5173/\"]}",
+    "parentStack": {
+      "Ref": "AWS::StackId"
+    },
+    "permissions": []
   }
 }

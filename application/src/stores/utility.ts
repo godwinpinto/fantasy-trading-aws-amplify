@@ -1,6 +1,6 @@
 
 
-export default function timeAgo(isoDatetime: string): string {
+export const timeAgo=(isoDatetime: string): string=> {
     const currentDate = new Date();
     const inputDate = new Date(isoDatetime);
     const timeDifferenceInSeconds = Math.floor((currentDate.getTime() - inputDate.getTime()) / 1000);
@@ -33,17 +33,17 @@ export default function timeAgo(isoDatetime: string): string {
     return `${timeDifferenceInYears} years ago`;
   }
 
-export function formatAmount(amount:number) {
-    // Use toLocaleString to format the amount with commas as thousands separators and 2 decimal places
+export const formatAmount=(amount:number)=> {
+    // Use toLocaleString to format the amount with commas as thousands separators and 4 decimal places
     return amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 });
   }
 
-export function calculateProfitOrLoss(
+export const calculateProfitOrLoss=(
     position: string,
     unitPurchasePrice: number,
     currentSellingPrice: number,
     units: number
-  ): number {
+  ): number =>{
     if (position === 'S') {
       // Short position: Profit/Loss = (Unit Purchase Price - Current Selling Price) * Units
       return (unitPurchasePrice - currentSellingPrice) * units;

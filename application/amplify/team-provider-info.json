@@ -12,9 +12,6 @@
       "AmplifyAppId": "d1xhajst1mi28r"
     },
     "categories": {
-      "auth": {
-        "application4b204dec": {}
-      },
       "api": {
         "application": {}
       },
@@ -29,6 +26,9 @@
           "deploymentBucketName": "amplify-application-dev-211203-deployment",
           "s3Key": "amplify-builds/S3Triggerfef74e72-35435566646b49524843-build.zip"
         }
+      },
+      "auth": {
+        "application5f08eaac": {}
       }
     }
   }

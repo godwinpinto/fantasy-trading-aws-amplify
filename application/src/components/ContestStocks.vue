@@ -1,34 +1,26 @@
 <script setup lang="ts">
-import type { UserInfo } from '@/stores/userStore';
 import { useUserStore } from '@/stores/userStore';
 import { storeToRefs } from 'pinia'
 import IconCurrency from '@/components/icons/IconCurrency.vue'
 import IconUp from '@/components/icons/IconUp.vue'
 import IconDown from '@/components/icons/IconDown.vue'
 import JoinGame from '@/components/game/JoinGame.vue'
-
-
 import { useGamePlayStore } from '@/stores/gamePlayStore';
-import { onMounted, watch, ref, onBeforeMount } from 'vue';
+import {  watch, ref, onBeforeMount } from 'vue';
 import { API, graphqlOperation } from 'aws-amplify'
-import { listContestStockFeeds, listContestStocks, listMessages, listParticipants } from '@/graphql/queries';
-import { onCreateMessage } from '@/graphql/subscriptions';
+import { listContestStockFeeds, listContestStocks,} from '@/graphql/queries';
 import type { GraphQLSubscription } from '@aws-amplify/api';
-import type { OnCreateParticipantSubscription, OnUpdateContestStockFeedSubscription } from '@/API';
+import type { OnUpdateContestStockFeedSubscription } from '@/API';
 import * as subscriptions from '@/graphql/subscriptions';
-import { createContestStock, createMessage, createUser } from './../graphql/mutations';
 import {formatAmount} from '../stores/utility';
+
 
 const userStore = useUserStore();
 const scrollChat = ref<HTMLElement | null>(null);
-
-
 const selectedStock = ref('BTC');
 const betType=ref('B');
 const { userInfo } = storeToRefs(userStore)
-
 const gamePlayStore = useGamePlayStore();
-
 const {investOrWithdraw}=useGamePlayStore();
 const { contestId, participantDetails, calculateInvestedAmount, CRYPTO_BTC, CRYPTO_DOGE, CRYPTO_SOL, CRYPTO_ETH, CRYPTO_XRP } = storeToRefs(gamePlayStore)
 
@@ -178,11 +170,11 @@ watch(participantDetails.value, (newValue, oldValue) => {
             <div class="flex items-center space-x-3">
               <div class="avatar">
                 <div class="mask mask-squircle w-12 h-12">
-                  <img v-if="stock.stockCode=='BTC'" :src="'src/assets/bitcoin.png' + " alt="Bitcoin Icon" />
-                  <img v-if="stock.stockCode=='DOGE'" :src="'src/assets/doge.png' + " alt="Doge Coin Icon" />
-                  <img v-if="stock.stockCode=='ETH'" :src="'src/assets/ethereum.png' + " alt="Ethereum Icon" />
-                  <img v-if="stock.stockCode=='SOL'" :src="'src/assets/solana.png' + " alt="Solana Icon" />
-                  <img v-if="stock.stockCode=='XRP'" :src="'src/assets/xrp.png' + " alt="Ripple Icon" />
+                  <img v-if="stock.stockCode=='BTC'" src="@/assets/bitcoin.png" alt="Bitcoin Icon" />
+                  <img v-if="stock.stockCode=='DOGE'" src="@/assets/doge.png" alt="Doge Coin Icon" />
+                  <img v-if="stock.stockCode=='ETH'" src="@/assets/ethereum.png" alt="Ethereum Icon" />
+                  <img v-if="stock.stockCode=='SOL'" src="@/assets/solana.png" alt="Solana Icon" />
+                  <img v-if="stock.stockCode=='XRP'" src="@/assets/xrp.png" alt="Ripple Icon" />
                 </div>
               </div>
               <div>
