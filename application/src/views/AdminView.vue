@@ -16,16 +16,14 @@ stockData.set('SOL', 0);
 
 let webSocket: WebSocket;
 
-// Function to handle WebSocket messages
-function onMessage(event: MessageEvent) {
+const onMessage = (event: MessageEvent) => {
   const data: any = JSON.parse(event.data);
   if (data.TYPE === '0') {
     stockData.set(data.FSYM, data.P);
   }
 }
 
-// Function to send the first request after the connection is open
-function onOpen() {
+const onOpen = () => {
   const firstRequest = {
     action: 'SubAdd',
     subs: [
@@ -36,53 +34,34 @@ function onOpen() {
       '0~Coinbase~SOL~USD',
     ],
   };
-
-  // Send the first request
   webSocket.send(JSON.stringify(firstRequest));
-
-  // Send the heartbeat request after 10 seconds
-  /* setTimeout(() => {
-    const heartbeatRequest = {
-      action: 'heartbeat',
-    };
-    webSocket.send(JSON.stringify(heartbeatRequest));
-  }, 10000); */
 }
 
-// Function to handle WebSocket connection errors
-function onError(error: Event) {
+const onError = (error: Event) => {
   console.error('WebSocket error:', error);
 }
 
-// Function to handle WebSocket connection close
-function onClose(event: CloseEvent) {
+const onClose = (event: CloseEvent) => {
   console.log('WebSocket connection closed:', event);
-
-  // Reconnect after 10 seconds
   setTimeout(() => {
     connectWebSocket();
   }, 10000);
 }
 
-// Function to establish WebSocket connection
-function connectWebSocket() {
+const connectWebSocket = () => {
   webSocket = new WebSocket(websocketUrl);
-
-  // Add event listeners
   webSocket.onmessage = onMessage;
   webSocket.onopen = onOpen;
   webSocket.onerror = onError;
   webSocket.onclose = onClose;
 }
 
-// Establish initial WebSocket connection
 connectWebSocket();
 
-// Periodically log stockData
 setInterval(() => {
   if (feedId.value) {
     const stockDataObject = Object.fromEntries(stockData);
-    console.log("stockDataObject",stockDataObject);
+    //console.log("stockDataObject", stockDataObject);
     updateFeedData(JSON.stringify(stockDataObject), contestIdOverall.value, feedId.value);
   }
 
@@ -97,15 +76,12 @@ const addStocks = async (stockCode: string, stockDescription: string, stockImage
       "stockPrice": stockPrice,
       "contestContestStockId": contestId
     };
-
-    console.log("variables", variables)
     const creationDetails: any = await API.graphql({
       query: createContestStock,
       variables: { input: variables }
     });
-
   } catch (error) {
-    console.log("cannot contest stock", error);
+    console.log("cannot add stocks", error);
   }
 }
 
@@ -116,8 +92,6 @@ const addFeedData = async (stockFeedJson: string, contestId: string) => {
       "stockFeed": stockFeedJson,
       "contestContestStockFeedId": contestId
     };
-
-    console.log("variables", variables)
     const creationDetails: any = await API.graphql({
       query: createContestStockFeed,
       variables: { input: variables }
@@ -125,7 +99,7 @@ const addFeedData = async (stockFeedJson: string, contestId: string) => {
     feedId.value = creationDetails.data.createContestStockFeed.id;
 
   } catch (error) {
-    console.log("cannot contest stock", error);
+    console.log("cannot create feeds", error);
   }
 }
 
@@ -139,7 +113,6 @@ const updateFeedData = async (stockFeedJson: string, contestId: string, feedUniq
       "stockFeed": stockFeedJson,
       "contestContestStockFeedId": contestId
     };
-
     const creationDetails: any = await API.graphql(graphqlOperation(
       updateContestStockFeed,
       {
@@ -148,9 +121,8 @@ const updateFeedData = async (stockFeedJson: string, contestId: string, feedUniq
       }
     ));
 
-
   } catch (error) {
-    console.log("cannot contest stock", error);
+    console.log("cannot update feed", error);
   }
 }
 
@@ -169,8 +141,6 @@ const createNewContest = async (contestName: string, contestDescription: string)
       "maxParticipants": 20,
       "contestDate": updatedUTCDate
     };
-
-    console.log("variables", variables)
     const creationDetails: any = await API.graphql({
       query: createContest,
       variables: { input: variables }
@@ -178,7 +148,7 @@ const createNewContest = async (contestName: string, contestDescription: string)
     return creationDetails.data.createContest;
 
   } catch (error) {
-    console.log("cannot contest stock", error);
+    console.log("cannot create contest", error);
   }
   return '';
 }
@@ -190,7 +160,6 @@ const getActiveContest = async (): Promise<any> => {
         "status": { "eq": "A" }
       },
     }));
-    console.log("activeContest",activeContest);
     if (activeContest && activeContest.data && activeContest.data.listContests && activeContest.data.listContests.items && activeContest.data.listContests.items.length == 1) {
       contestIdOverall.value = activeContest.data.listContests.items[0].id;
       return activeContest.data.listContests.items[0];
@@ -205,22 +174,18 @@ const getFeed = async (): Promise<void> => {
   try {
     const activeFeed: any = await API.graphql(graphqlOperation(listContestStockFeeds, {
       filter: {
-        "contestContestStockFeedId": { "eq":  contestIdOverall.value}
+        "contestContestStockFeedId": { "eq": contestIdOverall.value }
       },
     }));
-    console.log("activeFeed",activeFeed)
     if (activeFeed && activeFeed.data && activeFeed.data.listContestStockFeeds && activeFeed.data.listContestStockFeeds.items && activeFeed.data.listContestStockFeeds.items.length == 1) {
       feedId.value = activeFeed.data.listContestStockFeeds.items[0].id;
-//      return activeFeed.data.listContestStockFeeds.items[0];
     }
   } catch (error) {
-    console.log("error occured in fetching active contest", error);
+    console.log("error occured in fetching feed", error);
   }
 }
 
 const closePreviousContest = async (contestId: string, contestData: any): Promise<void> => {
-
-  console.log("contestIdcontestIdcontestId", contestId)
   const currentUTCDate = new Date();
   currentUTCDate.setDate(currentUTCDate.getDate() + 7);
   const updatedUTCDate = currentUTCDate.toISOString();
@@ -248,7 +213,6 @@ const closePreviousContest = async (contestId: string, contestData: any): Promis
         condition: { status: { eq: 'A' } }
       }
     ));
-    console.log("creationDetails.data", creationDetails.data);
   } catch (error) {
     console.log("cannot contest stock", error);
   }
@@ -257,8 +221,6 @@ const closePreviousContest = async (contestId: string, contestData: any): Promis
 
 const startNewContestCreation = async () => {
 
-  console.log("stockData", stockData)
-  console.log("stockData2", JSON.stringify(stockData))
   const stockDataObject = Object.fromEntries(stockData);
   const currentContest = await getActiveContest();
   if (currentContest) {
@@ -275,9 +237,7 @@ const startNewContestCreation = async () => {
 
 }
 
-
-getActiveContest().then(()=>{
-  console.log("new");
+getActiveContest().then(() => {
   getFeed();
 });
 </script>

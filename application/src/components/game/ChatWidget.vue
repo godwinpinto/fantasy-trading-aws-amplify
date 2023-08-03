@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import type { UserInfo } from '@/stores/userStore';
 import { useUserStore } from '@/stores/userStore';
 import { storeToRefs } from 'pinia'
 import { useGamePlayStore } from '@/stores/gamePlayStore';
-import { onMounted, watch, ref } from 'vue';
+import { watch, ref } from 'vue';
 import { API, graphqlOperation } from 'aws-amplify'
 import { listMessages } from '@/graphql/queries';
-import { onCreateMessage } from '@/graphql/subscriptions';
 import type { GraphQLSubscription } from '@aws-amplify/api';
 import type { OnCreateMessageSubscription } from '@/API';
 import * as subscriptions from '@/graphql/subscriptions';
-import { createMessage, createUser } from './../graphql/mutations';
+import { createMessage } from '@/graphql/mutations';
 
 
 const userStore = useUserStore();
@@ -37,45 +35,40 @@ const newMessage = ref('');
 
 const messages = ref<Array<message>>([]);
 
-const scrollChatToBottom=()=>{
+const scrollChatToBottom = () => {
     setTimeout(() => {
-                    if (scrollChat.value) {
-                        console.log("scroll");
-                        const element = scrollChat.value.lastElementChild;
-                        if (element) {
-                            element.scrollIntoView({ behavior: 'smooth', block: 'end' })
-                        
-                        } else {
+        if (scrollChat.value) {
+            console.log("scroll");
+            const element = scrollChat.value.lastElementChild;
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'end' })
+
+            } else {
                 console.log("not scroll");
             }
-
-        }}, 500);
-
-}    
+        }
+    }, 500);
+}
 
 const subscription = async () => {
-
     const sub = API.graphql<GraphQLSubscription<OnCreateMessageSubscription>>(graphqlOperation(subscriptions.onCreateMessage)).subscribe({
         next: ({ provider, value }) => {
             if (value.data) {
                 const messageDetails = value.data.onCreateMessage;
-                console.log("messageDetails",messageDetails)
+                console.log("messageDetails", messageDetails)
                 const val = {
                     message: messageDetails?.message ?? '',
                     user: messageDetails?.user ?? { id: '', username: '' },
                     createdAt: messageDetails?.createdAt ?? ''
                 }
-
                 messages.value.push(val);
                 scrollChatToBottom();
-
-    }
+            }
             console.log({ provider, value })
         },
-    error: (error) => console.warn(error)
+        error: (error) => console.warn(error)
     });
 }
-
 
 watch(contestId, (newContestId, oldContestId) => {
     if (newContestId !== oldContestId && newContestId != '') {
@@ -89,26 +82,24 @@ const getContestMessages = async (contestId: string) => {
         const existingMessages: any = await API.graphql(graphqlOperation(listMessages, { filter: { "contestMessageId": { "eq": contestId } }, limit: 10 }));
         console.log("existingMessages.data.listMessages.items===", existingMessages.data.listMessages.items);
 
-        if (existingMessages && existingMessages.data && existingMessages.data.listMessages && existingMessages.data.listMessages.items && existingMessages.data.listMessages.items.length>0) {
-            
-            const arrayMessages=existingMessages.data.listMessages.items;
+        if (existingMessages && existingMessages.data && existingMessages.data.listMessages && existingMessages.data.listMessages.items && existingMessages.data.listMessages.items.length > 0) {
+
+            const arrayMessages = existingMessages.data.listMessages.items;
             arrayMessages.forEach((messagess: any) => {
-                console.log("message",messagess.user)
-                const userr=messagess.user;
-                console.log("userr.id",userr.id)
-                const newMessage:message={
-                    message:messagess.message,
-                    user:{
+                console.log("message", messagess.user)
+                const userr = messagess.user;
+                console.log("userr.id", userr.id)
+                const newMessage: message = {
+                    message: messagess.message,
+                    user: {
                         "id": messagess.user.id,
-                        "username":messagess.user.username,
+                        "username": messagess.user.username,
                     },
-                    createdAt:messagess.createdAt
+                    createdAt: messagess.createdAt
                 }
                 messages.value.push(newMessage);
-    
-                });
 
-
+            });
             scrollChatToBottom();
         }
     } catch (error) {
@@ -140,15 +131,9 @@ const sendMessage = async () => {
     }
 }
 
-if(contestId.value!=''){
+if (contestId.value != '') {
     getContestMessages(contestId.value);
 }
-
-onMounted(() => {
-    //gamePlayStore.createMessageRecord("","");
-})
-
-
 </script>
 
 <template>
@@ -160,7 +145,7 @@ onMounted(() => {
     <div class=" flex flex-col">
         <div class="flex-col overflow-y-scroll flex mb-7" style="height:39rem" ref="scrollChat">
             <div v-for="message in messages" class="chat"
-                :class="userInfo.userId==message.user.id  ? 'chat-end' : 'chat-start'">
+                :class="userInfo.userId == message.user.id ? 'chat-end' : 'chat-start'">
                 <div class="chat-header">
                     {{ message.user.username }}
                     <!-- <time class="text-xs opacity-50">2 hours ago</time> -->

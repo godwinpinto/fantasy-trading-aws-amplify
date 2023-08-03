@@ -2,9 +2,9 @@ import { ref, computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
 import { API, Auth, graphqlOperation } from 'aws-amplify'
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
-import { createMessage, createParticipant, createUser, updateParticipant } from './../graphql/mutations';
-import { listContests, listUsers } from './../graphql/queries';
-import { calculateProfitOrLoss, formatAmount } from './utility';
+import { createMessage, createParticipant, createUser, updateParticipant } from '@/graphql/mutations';
+import { listContests, listUsers } from '@/graphql/queries';
+import { calculateProfitOrLoss, formatAmount } from '@/utils/utility';
 
 
 export interface IParticipant {

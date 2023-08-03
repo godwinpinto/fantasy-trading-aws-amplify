@@ -2,8 +2,10 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { API, Auth, graphqlOperation } from 'aws-amplify'
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth';
-import { createUser } from './../graphql/mutations';
-import { listUsers } from './../graphql/queries';
+import { createUser } from '@/graphql/mutations';
+import { listUsers } from '@/graphql/queries';
+import { useGamePlayStore } from '@/stores/gamePlayStore';
+import { storeToRefs } from 'pinia'
 
 export interface UserInfo {
   username: string
@@ -20,27 +22,29 @@ export const useUserStore = defineStore('userStore', () => {
     email: '',
     profileImage: ''
   })
-  function setUserDetails(userInfoVal: UserInfo) {
+
+  const gamePlayStore = useGamePlayStore();
+
+  const { participantDetails } = storeToRefs(gamePlayStore)
+  
+  const setUserDetails=(userInfoVal: UserInfo)=> {
     userInfo.value = userInfoVal
   }
-  function signInWithGoogle() {
+
+  const signInWithGoogle=()=> {
     try {
       Auth.federatedSignIn({ provider: CognitoHostedUIIdentityProvider.Google })
     } catch (error) {
-      console.log(error)
+      console.log("Failed to authenticate",error)
     }
   }
+  
   async function asyncSetUser() {
     try {
       const user:any = await Auth.currentAuthenticatedUser()
-
-      console.log("user", user)
-      console.log("user attributes", user.attributes.picture)
-
       if(user && user.attributes){
         const existingUser:any = await API.graphql(graphqlOperation(listUsers,{filter:{  "email":{"eq":user.attributes.email} }}));
         if(existingUser && existingUser.data && existingUser.data.listUsers && existingUser.data.listUsers.items && existingUser.data.listUsers.items.length==1){
-            console.log("user already exists")
             userInfo.value={
               username: user.attributes.name,
               userId: existingUser.data.listUsers.items[0].id,
@@ -52,7 +56,6 @@ export const useUserStore = defineStore('userStore', () => {
           const username=user.attributes.name;
           const profileImage=user.attributes.picture;
           const userDetails = { username, email,profileImage };
-          console.log("userDetails",userDetails)
           const creationDetails:any = await API.graphql({
             query: createUser,
             variables: { input: userDetails }
@@ -64,26 +67,46 @@ export const useUserStore = defineStore('userStore', () => {
               email: user.attributes.email,
               profileImage: user.attributes.picture
             }
-            console.log("users created",creationDetails);
           }else{
-            console.log("Something went wrong in creation")
+            console.log("Unable to create user")
           }
-
-                  
         }
-        console.log("existingUser",existingUser.data.listUsers.items[0].email);
-
-
-
       }else{
         console.log("user is not logged in");
       }
-
-
     } catch (error) {
-      console.log(error)
+      console.log("Something went wrong in authentication",error)
     }
   }
 
-  return { userInfo, setUserDetails, signInWithGoogle, asyncSetUser }
+
+  const signOut = () => {
+    try {
+      Auth.signOut();
+      userInfo.value = {
+        username: '',
+        userId: '',
+        email: '',
+        profileImage: ''
+      }
+      participantDetails.value = {
+        id: '',
+        user: {
+          id: '',
+          username: '',
+          profileImage: ''
+        },
+        balanceAmount: 0,
+        betType: '',
+        stockCode: '',
+        stockUnitBuyPrice: 0,
+        stockUnits: 0,
+        contestParticipantsId: ''
+      }
+    } catch (error) {
+      console.log("Something went wrong in signout",error);
+    }
+  }
+
+  return { userInfo, setUserDetails, signInWithGoogle, asyncSetUser,signOut }
 })
