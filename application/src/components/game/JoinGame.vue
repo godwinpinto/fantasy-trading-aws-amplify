@@ -11,7 +11,7 @@ const userStore=useUserStore();
 const { userInfo } = storeToRefs(userStore)
 
 
-const { contestId, participantDetails } = storeToRefs(gamePlayStore)
+const { contestId, participantDetails,contestDetails,currentParticipantCount } = storeToRefs(gamePlayStore)
 const { getActiveContest,joinGame }=useGamePlayStore();
 
 onBeforeMount(()=>{
@@ -31,7 +31,7 @@ onBeforeMount(()=>{
         </article>
 
         <div class="content-center col-span-2">
-            <button class="btn btn-accent btn-sm justify-center w-full" @click="joinGame(contestId,userInfo.userId)">Join the Game (2/10 entries)</button>
+            <button class="btn btn-accent btn-sm justify-center w-full" @click="joinGame(contestId,userInfo.userId)">Join the Game ({{ currentParticipantCount }}/{{ contestDetails.maxParticipants }} entries)</button>
         </div>
     </div>
 </div>

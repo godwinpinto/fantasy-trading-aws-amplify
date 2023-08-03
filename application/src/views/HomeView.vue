@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Leaderboard from '@/components/Leaderboard.vue';
+import Leaderboard from '@/components/TheLeaderboard.vue';
 import NavBar from '../components/NavBar.vue';
 import TheWelcome from '../components/TheWelcome.vue'
 import ChatWidget from '@/components/ChatWidget.vue'

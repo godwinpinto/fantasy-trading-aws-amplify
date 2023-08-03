@@ -55,7 +55,7 @@ function signOut() {
             </div>
         </div>
         <div v-if="userInfo.userId!=''" class="flex items-center space-x-3 mr-6">
-            <RouterLink to="/admin">Admin</RouterLink>
+            <RouterLink to="/admin">.</RouterLink>
 
             <div class="avatar">
               <div class="mask mask-squircle w-12 h-12">

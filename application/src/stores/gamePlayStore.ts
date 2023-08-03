@@ -25,6 +25,7 @@ export interface IParticipant {
 export const useGamePlayStore = defineStore('gamePlayStore', () => {
     const contestId = ref('')
     const joinedStatus = ref(false)
+    const currentParticipantCount = ref(0)
     const CRYPTO_BTC = ref(0)
     const CRYPTO_ETH = ref(0)
     const CRYPTO_SOL = ref(0)
@@ -199,5 +200,5 @@ export const useGamePlayStore = defineStore('gamePlayStore', () => {
         }
     })
 
-    return { contestId, joinedStatus, participantDetails, contestDetails, getActiveContest, calculateInvestedAmount, CRYPTO_BTC, CRYPTO_DOGE, CRYPTO_ETH, CRYPTO_SOL, CRYPTO_XRP, joinGame, investOrWithdraw }
+    return { contestId, joinedStatus, participantDetails, contestDetails, getActiveContest, calculateInvestedAmount, CRYPTO_BTC, CRYPTO_DOGE, CRYPTO_ETH, CRYPTO_SOL, CRYPTO_XRP, joinGame, investOrWithdraw,currentParticipantCount }
 })

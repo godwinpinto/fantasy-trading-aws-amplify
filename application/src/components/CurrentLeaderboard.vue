@@ -25,7 +25,7 @@ const { userInfo } = storeToRefs(userStore)
 
 const gamePlayStore = useGamePlayStore();
 
-const { contestId, participantDetails, joinedStatus,CRYPTO_BTC, CRYPTO_DOGE, CRYPTO_SOL, CRYPTO_ETH, CRYPTO_XRP } = storeToRefs(gamePlayStore)
+const { contestId, participantDetails, joinedStatus,CRYPTO_BTC, CRYPTO_DOGE, CRYPTO_SOL, CRYPTO_ETH, CRYPTO_XRP,currentParticipantCount } = storeToRefs(gamePlayStore)
 
 
 
@@ -82,6 +82,7 @@ const subscription = async () => {
           stockUnits: participantDetails.stockUnits
         }
         currentLeaderboardList.value.push(val);
+        currentParticipantCount.value=currentLeaderboardList.value.length;
       }
       console.log({ provider, value })
     },
@@ -145,6 +146,8 @@ const getCurrentLeaderboard = async (contestId: string) => {
           joinedStatus.value = true;
         }
 
+        
+
         return ({
           userId: participant.user.id,
           profileImage: participant.user.profileImage,
@@ -160,6 +163,7 @@ const getCurrentLeaderboard = async (contestId: string) => {
 
       currentLeaderboardList.value = userList;
 
+        currentParticipantCount.value=currentLeaderboardList.value.length;
 
 
       console.log("existingMessages.data.listMessages.items", existingParticipants.data.listParticipants.items);
